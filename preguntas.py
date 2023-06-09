@@ -88,29 +88,18 @@ def pregunta_08():
 
 
 def pregunta_09():
-    nombre_archivo = "tbl0.tsv"
-    df = pd.read_csv(nombre_archivo, delimiter='\t')
-
-    df['year'] = pd.to_datetime(df['_c3'], errors='coerce').dt.year
-
-    df = df.dropna(subset=['year'])
-
-    df['year'] = df['year'].astype(int)
-
-    return df
+    tbl0['year'] = tbl0['_c3'].map(lambda x: x.split('-')[0])
+    return tbl0
 
 
 
 def pregunta_10():
-    archivo = "tbl0.tsv"
-    df = pd.read_csv(archivo, sep='\t')
+    col1 = list(tbl0['_c1'].unique())
+    col1.sort()
+    cant = tbl0.groupby('_c1')['_c2'].apply(lambda x: ':'.join(str(e) for e in sorted(x)))
+    x = pd.DataFrame({"_c2": list(cant.array)}, index=pd.Series(col1, name="_c1"),)
 
-    df['_c2'] = df['_c2'].astype(int)
-    df = df.sort_values(by='_c2')
-
-    tabla = df.groupby('_c1')['_c2'].apply(lambda x: ':'.join(map(str, x))).reset_index()
-
-    return tabla
+    return x
 
 
 
