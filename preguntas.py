@@ -86,6 +86,7 @@ def pregunta_08():
     return df
 
 
+
 def pregunta_09():
     nombre_archivo = "tbl0.tsv"
     df = pd.read_csv(nombre_archivo, delimiter='\t')
@@ -97,6 +98,7 @@ def pregunta_09():
     df['year'] = df['year'].astype(int)
 
     return df
+
 
 
 def pregunta_10():
